@@ -7,6 +7,32 @@ http://maven.apache.org/guides/getting-started/index.html
 
 
 
+Dependencies for running this project will be taken care of by installing maven plugin
+
+
+*Problem statement*
+
+*************************************************************************************************************************************
+A global publishing company that publishes books and journals wants to develop a service to add XYZ inc. impression to their 
+documents. Book publications include topics in business, science and media. Journals don’t include any specific topics. A document 
+(books, journals) has a title, author and an impression-mark property. An empty impression-mark property indicates that the 
+document has not been impression-marked yet.
+
+The impression marking service has to be asynchronous. For a given content document the service should return a ticket, which 
+can be used to poll the status of processing. If the impression marking is finished, then the document can be retrieved with the 
+ticket. The impression-mark of a book or a journal is identified by setting the impression-mark property of the object. 
+For a book the impression-mark includes the properties content, title, author and topic. The journal impression-mark includes 
+the content, title and author. 
+
+
+Examples for impression-marks:
+{content:”book”, title:”The Dark Code”, author:”Bruce Wayne”, topic:”Science”}
+{content:”book”, title:”How to make money”, author:”Dr. Evil”, topic:”Business”}
+{content:”journal”, title:”Journal of human flight routes”, author:”Clark Kent”}
+**************************************************************************************************************************************
+
+
+
 Import the project in eclipse and do a maven clean install and then run server
 
 use apache HTTP port 28088

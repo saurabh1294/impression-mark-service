@@ -1,0 +1,117 @@
+<html>
+	<head>
+		<title>
+			Impression mark service - demo
+		</title>
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	</head>
+	
+	<body onload = "init()">
+		<table>
+			<tr>
+				<h3>Web service front end<h3>
+			</tr>
+			<tr></tr>
+			<tr>
+				<td>
+					Document type: 
+					<td><input type = "text" id = "docType" maxlength="20"> </input></td>
+				</td>
+			</tr>
+
+			<tr>
+				<td style="padding: 5px;">
+					Document title: 
+					<td><input type = "text" id = "docTitle" maxlength="20"> </input></td>
+				</td>
+			</tr>
+
+			<tr>
+				<td style="padding: 5px;">
+					Ticket: 
+					<td><input type = "text" id = "ticket" maxlength="20"> </input></td>
+				</td>
+			</tr>
+
+			
+			<tr>
+				<td style="padding: 5px;">
+					Output : 
+					<td><textarea id="output" rows="20" cols="40"></textarea></td>
+				</td>
+			</tr>
+
+			<tr>
+				<td style="padding: 5px;">
+					<input type = "button" id = "submit" value = "Submit Request" onclick="callWebService()"> </input>
+				</td>
+			</tr>
+
+			<tr>
+				<td style="padding: 5px;">
+					<input type = "button" id = "submit" value = "Poll Service" onclick="start()"> </input>
+				</td>
+			</tr>
+
+		</table>
+	</body>
+</html>
+
+<script language = "javascript">
+
+	site_url = "http://localhost:28088/impression-ser/document/";
+	docType = null;
+	docTitle = null;
+
+	function init() {
+		document.getElementById("docType").focus();
+	}
+
+	function start() {
+		setInterval(pollWebService,5000);
+	}
+
+
+	function pollWebService() {
+		ticket = document.getElementById("ticket").value;
+		web_service_url = site_url+ticket;
+		setResponse("output");
+	}
+
+	function callWebService() {
+		docType = document.getElementById("docType").value;
+		docTitle = document.getElementById("docTitle").value;
+		web_service_url = site_url+docType+"/"+docTitle+"/";
+
+		setResponse("ticket");
+	}
+
+
+	function setResponse(id) {
+
+		 $.ajax({url:web_service_url,
+			type:"get",
+			dataType:"json",
+			error: function(){
+				alert( "AJAX - error()" );
+							
+				// Load the content in to the page.
+				alert( "<p>Page Not Found!!</p>" );
+			},
+						
+			beforeSend: function(){
+				//alert( "AJAX - beforeSend()" );
+			},
+						
+			complete: function(){
+				//alert( "AJAX - complete()" );
+			},
+			success:function(result){
+    			//$("#output").html(result);
+			document.getElementById(id).value = result;
+  		}});
+	}
+
+
+</script>
